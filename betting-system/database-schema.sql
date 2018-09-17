@@ -14,7 +14,7 @@ CREATE TABLE box.users (
 );
 
 CREATE TABLE box.transcations (
-  user_id INT REFERENCES box.users(id),
+  user_id INT REFERENCES box.users(id) ON DELETE CASCADE ON UPDATE CASCADE,
   date DATE DEFAULT now(),
   value INT NOT NULL
 );
@@ -40,14 +40,14 @@ CREATE TABLE box.boxers (
 );
 
 CREATE TABLE box.boxer_teams_boxers (
-  team_id INT REFERENCES box.boxer_teams(id),
-  boxer_id INT REFERENCES box.boxers(id)
+  team_id INT REFERENCES box.boxer_teams(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  boxer_id INT REFERENCES box.boxers(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE box.competitors (
   id INT PRIMARY KEY,
-  team_id INT REFERENCES box.boxer_teams(id),
-  boxer_id INT REFERENCES box.boxers(id)
+  team_id INT REFERENCES box.boxer_teams(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  boxer_id INT REFERENCES box.boxers(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE box.event (
@@ -55,23 +55,23 @@ CREATE TABLE box.event (
   name TEXT NOT NULL,
   description TEXT,
   event_date DATE,
-  location_id INT REFERENCES box.locations(id),
-  winner_id INT REFERENCES box.competitors(id)
+  location_id INT REFERENCES box.locations(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  winner_id INT REFERENCES box.competitors(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE box.bets (
   id INT PRIMARY KEY,
   date DATE,
-  user_id INT REFERENCES box.users(id),
-  event_id INT REFERENCES box.event(id),
+  user_id INT REFERENCES box.users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  event_id INT REFERENCES box.event(id) ON DELETE CASCADE ON UPDATE CASCADE,
   bet INT NOT NULL
 );
 
 CREATE TABLE box.rates (
   event_id INT REFERENCES box.event(id),
   is_group_fight BOOLEAN,
-  competitor_1 INT REFERENCES box.competitors(id),
-  competitor_2 INT REFERENCES box.competitors(id),
+  competitor_1 INT REFERENCES box.competitors(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  competitor_2 INT REFERENCES box.competitors(id) ON DELETE CASCADE ON UPDATE CASCADE,
   rate_1 REAL NOT NULL,
   rate_2 REAL NOT NULL
 );
