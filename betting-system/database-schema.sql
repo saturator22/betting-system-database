@@ -13,7 +13,7 @@ CREATE TABLE box.users (
   balance INT DEFAULT 0
 );
 
-CREATE TABLE box.transcations (
+CREATE TABLE box.transactions (
   user_id INT REFERENCES box.users(id) ON DELETE CASCADE ON UPDATE CASCADE,
   date DATE DEFAULT now(),
   value INT NOT NULL,
@@ -74,8 +74,7 @@ CREATE TABLE box.rates (
   competitor_2 INT REFERENCES box.competitors(id) ON DELETE CASCADE ON UPDATE CASCADE,
   rate_1 REAL NOT NULL,
   rate_2 REAL NOT NULL
-);
-
+);id = 1;
 COPY box.users(first_name, last_name, login, password, balance)  FROM '/home/filip/Java_adv/TW_2/betting-system-database/betting-system/Sample_Data/CSV/users.csv'
 DELIMITER ',';
 COPY box.transcations FROM '/home/filip/Java_adv/TW_2/betting-system-database/betting-system/Sample_Data/CSV/transactions.csv'
