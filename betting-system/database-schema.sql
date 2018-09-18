@@ -28,13 +28,13 @@ CREATE TABLE box.locations (
 );
 
 CREATE TABLE box.boxer_teams (
-  id INT PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   name TEXT NOT NULL,
   description TEXT NOT NULL
 );
 
 CREATE TABLE box.boxers (
-  id INT PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL,
   nick_name TEXT
@@ -46,13 +46,13 @@ CREATE TABLE box.boxer_teams_boxers (
 );
 
 CREATE TABLE box.competitors (
-  id INT PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   team_id INT REFERENCES box.boxer_teams(id) ON DELETE CASCADE ON UPDATE CASCADE,
   boxer_id INT REFERENCES box.boxers(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE box.event (
-  id INT PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   name TEXT NOT NULL,
   description TEXT,
   event_date DATE,
@@ -74,7 +74,8 @@ CREATE TABLE box.rates (
   competitor_2 INT REFERENCES box.competitors(id) ON DELETE CASCADE ON UPDATE CASCADE,
   rate_1 REAL NOT NULL,
   rate_2 REAL NOT NULL
-);id = 1;
+);
+
 COPY box.users(first_name, last_name, login, password, balance)  FROM '/home/filip/Java_adv/TW_2/betting-system-database/betting-system/Sample_Data/CSV/users.csv'
 DELIMITER ',';
 COPY box.transcations FROM '/home/filip/Java_adv/TW_2/betting-system-database/betting-system/Sample_Data/CSV/transactions.csv'
