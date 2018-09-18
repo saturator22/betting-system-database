@@ -75,10 +75,3 @@ CREATE TABLE box.rates (
   rate_1 REAL NOT NULL,
   rate_2 REAL NOT NULL
 );
-
-COPY box.users(first_name, last_name, login, password, balance)  FROM '/home/filip/Java_adv/TW_2/betting-system-database/betting-system/Sample_Data/CSV/users.csv'
-DELIMITER ',';
-COPY box.transcations FROM '/home/filip/Java_adv/TW_2/betting-system-database/betting-system/Sample_Data/CSV/transactions.csv'
-DELIMITER ',';
-INSERT INTO box.users (first_name, last_name, login, password)
-VALUES ('Wojtekgdasd', 'Makiela3dasd', 'Wasdasojtek123', 'Makiela1asd23');
