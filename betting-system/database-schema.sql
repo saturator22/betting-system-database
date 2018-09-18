@@ -1,5 +1,5 @@
 -- DROP DATABASE betting_system;
-CREATE DATABASE betting_system;
+-- CREATE DATABASE betting_system;
 
 DROP SCHEMA box CASCADE;
 CREATE SCHEMA box;
@@ -13,7 +13,7 @@ CREATE TABLE box.users (
   balance INT DEFAULT 0
 );
 
-CREATE TABLE box.transcations (
+CREATE TABLE box.transactions (
   user_id INT REFERENCES box.users(id) ON DELETE CASCADE ON UPDATE CASCADE,
   date DATE DEFAULT now(),
   value INT NOT NULL,
@@ -74,4 +74,4 @@ CREATE TABLE box.rates (
   competitor_2 INT REFERENCES box.competitors(id) ON DELETE CASCADE ON UPDATE CASCADE,
   rate_1 REAL NOT NULL,
   rate_2 REAL NOT NULL
-);
+);id = 1;
