@@ -1,15 +1,15 @@
 -- DROP DATABASE betting_system;
-CREATE DATABASE betting_system;
+-- CREATE DATABASE betting_system;
 
 DROP SCHEMA box CASCADE;
 CREATE SCHEMA box;
 
 CREATE TABLE box.users (
-  id INT PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL,
   login TEXT UNIQUE NOT NULL,
-  password TEXT UNIQUE NOT NULL,
+  password TEXT NOT NULL,
   balance INT DEFAULT 0
 );
 
@@ -21,7 +21,7 @@ CREATE TABLE box.transcations (
 );
 
 CREATE TABLE box.locations (
-  id INT PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   name TEXT NOT NULL,
   description TEXT,
   address TEXT
@@ -75,3 +75,10 @@ CREATE TABLE box.rates (
   rate_1 REAL NOT NULL,
   rate_2 REAL NOT NULL
 );
+
+COPY box.users(first_name, last_name, login, password, balance)  FROM '/home/filip/Java_adv/TW_2/betting-system-database/betting-system/Sample_Data/CSV/users.csv'
+DELIMITER ',';
+COPY box.transcations FROM '/home/filip/Java_adv/TW_2/betting-system-database/betting-system/Sample_Data/CSV/transactions.csv'
+DELIMITER ',';
+INSERT INTO box.users (first_name, last_name, login, password)
+VALUES ('Wojtekgdasd', 'Makiela3dasd', 'Wasdasojtek123', 'Makiela1asd23');
