@@ -16,7 +16,8 @@ CREATE TABLE box.users (
 CREATE TABLE box.transcations (
   user_id INT REFERENCES box.users(id) ON DELETE CASCADE ON UPDATE CASCADE,
   date DATE DEFAULT now(),
-  value INT NOT NULL
+  value INT NOT NULL,
+  is_Bet BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 CREATE TABLE box.locations (
@@ -60,16 +61,15 @@ CREATE TABLE box.event (
 );
 
 CREATE TABLE box.bets (
-  id INT PRIMARY KEY,
-  date DATE,
   user_id INT REFERENCES box.users(id) ON DELETE CASCADE ON UPDATE CASCADE,
   event_id INT REFERENCES box.event(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  bet INT NOT NULL
+  competitor_id INT REFERENCES box.competitors(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  bet INT NOT NULL,
+  date DATE
 );
 
 CREATE TABLE box.rates (
   event_id INT REFERENCES box.event(id),
-  is_group_fight BOOLEAN,
   competitor_1 INT REFERENCES box.competitors(id) ON DELETE CASCADE ON UPDATE CASCADE,
   competitor_2 INT REFERENCES box.competitors(id) ON DELETE CASCADE ON UPDATE CASCADE,
   rate_1 REAL NOT NULL,
