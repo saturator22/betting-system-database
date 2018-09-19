@@ -47,8 +47,8 @@ CREATE TABLE box.boxer_teams_boxers (
 
 CREATE TABLE box.competitors (
   id SERIAL PRIMARY KEY,
-  team_id INT REFERENCES box.boxer_teams(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  boxer_id INT REFERENCES box.boxers(id) ON DELETE CASCADE ON UPDATE CASCADE
+  team_id INT REFERENCES box.boxer_teams(id),
+  boxer_id INT REFERENCES box.boxers(id)
 );
 
 CREATE TABLE box.event (
@@ -56,8 +56,8 @@ CREATE TABLE box.event (
   name TEXT NOT NULL,
   description TEXT,
   event_date DATE,
-  location_id INT REFERENCES box.locations(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  winner_id INT REFERENCES box.competitors(id) ON DELETE CASCADE ON UPDATE CASCADE
+  location_id INT REFERENCES box.locations(id) ON DELETE SET NULL,
+  winner_id INT REFERENCES box.competitors(id) ON UPDATE CASCADE
 );
 
 CREATE TABLE box.bets (
@@ -70,8 +70,8 @@ CREATE TABLE box.bets (
 
 CREATE TABLE box.rates (
   event_id INT REFERENCES box.event(id),
-  competitor_1 INT REFERENCES box.competitors(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  competitor_2 INT REFERENCES box.competitors(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  competitor_1 INT REFERENCES box.competitors(id),
+  competitor_2 INT REFERENCES box.competitors(id),
   rate_1 REAL NOT NULL,
   rate_2 REAL NOT NULL
 );
