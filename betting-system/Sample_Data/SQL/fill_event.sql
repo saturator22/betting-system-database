@@ -998,3 +998,6 @@ INSERT INTO box.event (id, name, description, event_date, location_id, winner_id
 INSERT INTO box.event (id, name, description, event_date, location_id, winner_id) VALUES (998, 'Shuffletag', 'Networked content-based info-mediaries', '2015-07-14', 499, 167);
 INSERT INTO box.event (id, name, description, event_date, location_id, winner_id) VALUES (999, 'Chatterbridge', 'Customizable foreground emulation', '2017-01-03', 500, 184);
 INSERT INTO box.event (id, name, description, event_date, location_id, winner_id) VALUES (1000, 'Agivu', 'Vision-oriented grid-enabled data-warehouse', '2016-10-24', 1, 201);
+
+-- Set Next ID Value to MAX ID
+SELECT setval('box.event_id_seq', (SELECT MAX(id) FROM box.event));

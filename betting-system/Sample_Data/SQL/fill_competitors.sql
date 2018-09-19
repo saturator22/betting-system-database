@@ -1198,3 +1198,6 @@ INSERT INTO box.competitors (id, team_id, boxer_id) VALUES (1197, 197, null);
 INSERT INTO box.competitors (id, team_id, boxer_id) VALUES (1198, 198, null);
 INSERT INTO box.competitors (id, team_id, boxer_id) VALUES (1199, 199, null);
 INSERT INTO box.competitors (id, team_id, boxer_id) VALUES (1200, 200, null);
+
+-- Set Next ID Value to MAX ID
+SELECT setval('box.competitors_id_seq', (SELECT MAX(id) FROM box.competitors));

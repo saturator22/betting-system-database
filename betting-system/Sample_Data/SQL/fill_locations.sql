@@ -498,3 +498,6 @@ INSERT INTO box.locations (id, name, description, address) VALUES (497, 'Centide
 INSERT INTO box.locations (id, name, description, address) VALUES (498, 'Browsecat', 'Up-sized multi-state knowledge user', '0 Buhler Avenue');
 INSERT INTO box.locations (id, name, description, address) VALUES (499, 'Yoveo', 'Cloned local implementation', '1287 Barby Plaza');
 INSERT INTO box.locations (id, name, description, address) VALUES (500, 'Yakidoo', 'Profit-focused uniform matrix', '47 Melody Junction');
+
+-- Set Next ID Value to MAX ID
+SELECT setval('box.locations_id_seq', (SELECT MAX(id) FROM box.locations));

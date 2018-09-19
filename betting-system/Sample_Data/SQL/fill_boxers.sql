@@ -998,3 +998,6 @@ INSERT INTO box.boxers (id, first_name, last_name, nick_name) VALUES (997, 'Farr
 INSERT INTO box.boxers (id, first_name, last_name, nick_name) VALUES (998, 'Ranice', 'Woodrup', 'Acer campestre L.');
 INSERT INTO box.boxers (id, first_name, last_name, nick_name) VALUES (999, 'Filip', 'Brzozowski', 'Brzozo rozkurwiator');
 INSERT INTO box.boxers (id, first_name, last_name, nick_name) VALUES (1000, 'Janet', 'Tremblet', 'Carex albonigra Mack.');
+
+-- Set Next ID Value to MAX ID
+SELECT setval('box.boxers_id_seq', (SELECT MAX(id) FROM box.boxers));

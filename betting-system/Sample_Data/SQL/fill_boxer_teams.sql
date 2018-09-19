@@ -198,3 +198,6 @@ INSERT INTO box.boxer_teams (id, name, description) VALUES (197, 'GPIA', 'Adapti
 INSERT INTO box.boxer_teams (id, name, description) VALUES (198, 'MB', 'Optional 5th generation superstructure');
 INSERT INTO box.boxer_teams (id, name, description) VALUES (199, 'DWFI', 'Optimized needs-based access');
 INSERT INTO box.boxer_teams (id, name, description) VALUES (200, 'WFT', 'Enterprise-wide value-added service-desk');
+
+-- Set Next ID Value to MAX ID
+SELECT setval('box.boxer_teams_id_seq', (SELECT MAX(id) FROM box.boxer_teams));
