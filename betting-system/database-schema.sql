@@ -74,10 +74,11 @@ CREATE TABLE box.rates (
   competitor_2 INT REFERENCES box.competitors(id) ON DELETE CASCADE ON UPDATE CASCADE,
   rate_1 REAL NOT NULL,
   rate_2 REAL NOT NULL
-);id = 1;
+);
+
 COPY box.users(first_name, last_name, login, password, balance)  FROM '/home/filip/Java_adv/TW_2/betting-system-database/betting-system/Sample_Data/CSV/users.csv'
 DELIMITER ',';
-COPY box.transcations FROM '/home/filip/Java_adv/TW_2/betting-system-database/betting-system/Sample_Data/CSV/transactions.csv'
+COPY box.transactions FROM '/home/filip/Java_adv/TW_2/betting-system-database/betting-system/Sample_Data/CSV/transactions.csv'
 DELIMITER ',';
 INSERT INTO box.users (first_name, last_name, login, password)
 VALUES ('Wojtekgdasd', 'Makiela3dasd', 'Wasdasojtek123', 'Makiela1asd23');
