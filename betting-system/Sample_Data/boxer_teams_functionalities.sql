@@ -17,7 +17,6 @@ RETURNS setof team_data AS
 $BODY$
   DECLARE
     r team_data%rowtype;
-    id int;
   BEGIN
     FOR r IN SELECT * FROM box.boxer_teams LOOP
       -- Count all members of given boxer team
