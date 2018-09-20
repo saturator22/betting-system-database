@@ -1,19 +1,25 @@
-DROP VIEW user_bets_view;
+DROP MATERIALIZED VIEW user_bets_view;
 
-CREATE OR REPLACE TEMP VIEW user_bets_view AS
-SELECT b.user_id, b.event_id, b.competitor_id, b.bet, b.date
-  FROM box.bets b;
+CREATE MATERIALIZED VIEW user_bets_view AS
+SELECT u.login, b.user_id, b.event_id, b.competitor_id, b.bet, b.date
+  FROM box.bets b
+JOIN box.users u
+ON u.id = b.user_id
+WITH NO DATA;
 
 DROP FUNCTION getBets(id INT);
 CREATE OR REPLACE FUNCTION getBets(id INT)
-  RETURNS table(event_id INT, competitor_id INT, bet INT, date DATE) AS $$
+  RETURNS table(login TEXT, event_id INT, competitor_id INT, bet INT, date DATE) AS $$
 
   BEGIN
-    RETURN QUERY EXECUTE 'SELECT event_id, competitor_id, bet, date ' ||
-                         'FROM user_bets_view' ||
-                         'WHERE ' || id || ' = user_id';
+    EXECUTE 'REFRESH MATERIALIZED VIEW user_bets_view';
+    RETURN QUERY EXECUTE 'SELECT ubv.login, ubv.event_id, ubv.competitor_id, ubv.bet, ubv.date ' ||
+                         'FROM user_bets_view as ubv ' ||
+                         'WHERE ' || id || '= ubv.user_id';
   end;$$
   LANGUAGE PLPGSQL;
 
-SELECT getBets();
+REFRESH MATERIALIZED VIEW user_bets_view;
+SELECT * FROM user_bets_view;
+SELECT * FROM getBets(2);
 
