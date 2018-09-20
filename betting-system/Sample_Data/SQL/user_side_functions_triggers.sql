@@ -22,13 +22,14 @@ CREATE OR REPLACE FUNCTION getBets(id INT)
   RETURNS table(event_id INT, competitor_id INT, bet INT, date DATE) AS $$
 
   BEGIN
-    RETURN QUERY EXECUTE 'SELECT event_id, competitor_id, bet, date ' ||
+    EXECUTE 'REFRESH MATERIALIZED VIEW user_bets_view';
+    RETURN QUERY EXECUTE 'SELECT login, event_id, competitor_id, bet, date ' ||
                          'FROM user_bets_view' ||
                          'WHERE ' || id || ' = user_id';
   end;$$
   LANGUAGE PLPGSQL;
 
-SELECT getBets();
+SELECT * FROM getBets(2);
 
 --VALIDATE TRANSACTIONS
 DROP FUNCTION isTransactionValid(id INT, betValue INT);
@@ -86,12 +87,15 @@ CREATE OR REPLACE FUNCTION withdrawMoney(id INT, amount INT)
 
 SELECT withdrawMoney(2, 300);
 
+--TRIGGER
 CREATE TRIGGER placing_bet BEFORE INSERT
   ON box.bets
   FOR EACH ROW
   EXECUTE PROCEDURE placeBet();
 
 DROP TRIGGER placing_bet ON box.bets;
+
+--TRIGGER FUNCTION
 DROP FUNCTION placeBet();
 
 CREATE OR REPLACE FUNCTION placeBet()
@@ -106,8 +110,9 @@ CREATE OR REPLACE FUNCTION placeBet()
   end;$$
   LANGUAGE PLPGSQL;
 
-INSERT INTO box.bets VALUES (2, 2, 2, 2000, now());
 
+--TEST
+INSERT INTO box.bets VALUES (2, 2, 2, 300, now());
 
 SELECT * FROM box.users
 WHERE users.id = 2;
