@@ -1,7 +1,7 @@
 -- DROP DATABASE betting_system;
 -- CREATE DATABASE betting_system;
 
-DROP SCHEMA box CASCADE;
+DROP SCHEMA IF EXISTS box CASCADE;
 CREATE SCHEMA box;
 
 CREATE TABLE box.users (

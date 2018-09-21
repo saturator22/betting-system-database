@@ -1,4 +1,4 @@
-DROP MATERIALIZED VIEW user_bets_view;
+DROP MATERIALIZED VIEW IF EXISTS user_bets_view;
 
 CREATE MATERIALIZED VIEW user_bets_view AS
 SELECT u.login, b.user_id, b.event_id, b.competitor_id, b.bet, b.date

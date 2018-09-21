@@ -1,6 +1,6 @@
 --GET TRANSACTIONS FOR USER
 
-DROP FUNCTION getTransactions(id INT);
+DROP FUNCTION IF EXISTS getTransactions(id INT);
 
 CREATE OR REPLACE FUNCTION getTransactions(id INT)
   RETURNS table(d DATE, v INT, b BOOLEAN) AS $$
@@ -19,12 +19,12 @@ SELECT * FROM getTransactions(29430);
 DROP FUNCTION getBets(id INT);
 
 CREATE OR REPLACE FUNCTION getBets(id INT)
-  RETURNS table(event_id INT, competitor_id INT, bet INT, date DATE) AS $$
+  RETURNS table(login TEXT, event_id INT, competitor_id INT, bet INT, date DATE) AS $$
 
   BEGIN
     EXECUTE 'REFRESH MATERIALIZED VIEW user_bets_view';
     RETURN QUERY EXECUTE 'SELECT login, event_id, competitor_id, bet, date ' ||
-                         'FROM user_bets_view' ||
+                         'FROM user_bets_view ' ||
                          'WHERE ' || id || ' = user_id';
   end;$$
   LANGUAGE PLPGSQL;
@@ -32,7 +32,7 @@ CREATE OR REPLACE FUNCTION getBets(id INT)
 SELECT * FROM getBets(2);
 
 --VALIDATE TRANSACTIONS
-DROP FUNCTION isTransactionValid(id INT, betValue INT);
+DROP FUNCTION IF EXISTS isTransactionValid(id INT, betValue INT);
 
 CREATE OR REPLACE FUNCTION isTransactionValid(id INT, betValue INT)
   RETURNS BOOLEAN AS $$
@@ -87,16 +87,9 @@ CREATE OR REPLACE FUNCTION withdrawMoney(id INT, amount INT)
 
 SELECT withdrawMoney(2, 300);
 
---TRIGGER
-CREATE TRIGGER placing_bet BEFORE INSERT
-  ON box.bets
-  FOR EACH ROW
-  EXECUTE PROCEDURE placeBet();
-
-DROP TRIGGER placing_bet ON box.bets;
 
 --TRIGGER FUNCTION
-DROP FUNCTION placeBet();
+-- DROP FUNCTION placeBet();
 
 CREATE OR REPLACE FUNCTION placeBet()
   RETURNS trigger AS $$
@@ -111,14 +104,22 @@ CREATE OR REPLACE FUNCTION placeBet()
   LANGUAGE PLPGSQL;
 
 
+--TRIGGER
+CREATE TRIGGER placing_bet BEFORE INSERT
+  ON box.bets
+  FOR EACH ROW
+  EXECUTE PROCEDURE placeBet();
+
+-- DROP TRIGGER placing_bet ON box.bets;
+
 --TEST
-INSERT INTO box.bets VALUES (2, 2, 2, 300, now());
-
-SELECT * FROM box.users
-WHERE users.id = 2;
-
-SELECT * FROM box.bets;
-SELECT * FROM box.transactions
-    WHERE user_id = 2;
-
-DELETE FROM box.bets;
+-- INSERT INTO box.bets VALUES (2, 2, 2, 300, now());
+--
+-- SELECT * FROM box.users
+-- WHERE users.id = 2;
+--
+-- SELECT * FROM box.bets;
+-- SELECT * FROM box.transactions
+--     WHERE user_id = 2;
+--
+-- DELETE FROM box.bets;

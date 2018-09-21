@@ -64,3 +64,9 @@ CREATE TRIGGER new_team_created
   AFTER INSERT
   ON box.boxer_teams
   EXECUTE PROCEDURE create_team_as_competitor();
+
+
+select *
+from full_boxer_teams_data()
+
+;
